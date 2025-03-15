@@ -11,23 +11,24 @@ fire_sound = mixer.Sound('chut.ogg')
 font.init()
 font1 = font.Font(None, 80)
 font2 = font.Font(None, 36)
-win = font1.render('YOU WIN!', True, (255, 255, 255))
-lose = font1.render('YOU LOSE!', True, (180, 0, 0))
+win = font1.render('ЦЕ ЛЕГКО!', True, (255, 255, 255))
+lose = font1.render('НЕВДАЧА!', True, (180, 0, 0))
 
 
 font.init()
 font2 = font.Font(None, 36)
 
-img_back = "begraund.jpg.jpg"
-img_hero = "sprite.jpg"
-img_enemy = "inoplenitian.jpg"
+img_sprite = "perechcoda.png"
+img_back = "фон.jpg"
+img_hero = "hero.png"
+img_enemy = "nlo.png"
 img_bullet = "pyla.png"
 
 clock = time.Clock()
 FPS = 60
 
 score = 0 
-goal = 40
+goal = 10
 lost = 0
 max_lost = 3
 life = 3
@@ -35,7 +36,7 @@ bullet_count = 10
 reload_stars_time = None
 
 
-class GameSprite(sprite.Sprite):    
+class GameSprite(sprite.Sprite,):    
     def __init__ (
         self,
         player_image,
@@ -43,7 +44,11 @@ class GameSprite(sprite.Sprite):
         player_y,
         size_x,
         size_y,
-        player_speed
+        player_speed,
+        player2_image,
+        player2_x,
+        player2_y,
+        player2_speed.
     ):
         super().__init__()
         self.image = transform.scale(
@@ -91,14 +96,14 @@ class Enemy(GameSprite):
  
 # створюємо віконце
 win_width = 700
-win_height = 700
+win_height = 850
 display.set_caption("Shooter")
 window = display.set_mode((win_width, win_height))
 background = transform.scale(image.load(img_back), (win_width, win_height))
  
 # створюємо спрайти
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
-
+pig = sprite(img_sprite, 5, win_height - 110, 100, 110, 20)
 monsters = sprite.Group()
 for i in range(1, 6):
     monster = Enemy(img_enemy, randint(
@@ -129,11 +134,11 @@ while run:
         # оновлюємо фон
         window.blit(background, (0, 0))
 
-        text = font2.render("Рахунок: " + str(score), 1, (255, 255, 250))
+        text = font2.render("Ліквідовано: " + str(score), 1, (0, 255, 0))
         window.blit(text, (10, 20))
 
-        text_lose = font2.render(f"Пропущено: {lost}", 1, (255, 255, 255))
-        window.blit(text_lose, (10, 50))
+        text_lose = font2.render(f"Пропущено: {lost}", 1, (255, 0, 0))
+        window.blit(text_lose, (510, 20))
          
  
         # рухи спрайтів
@@ -168,8 +173,8 @@ while run:
             )
             monsters.add(monster)
 
-        text_life = font1.render(str(life), 1, (255, 0, 0))
-        window.blit(text_life, (650, 10))
+        text_life = font1.render(str(life), 1, (200, 0, 150))
+        window.blit(text_life, (350, 10))
 
         if life == 0 or lost >= max_lost:
             finish = True
